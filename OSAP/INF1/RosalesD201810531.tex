@@ -1,0 +1,299 @@
+\documentclass[letter, 10pt]{article}
+\usepackage[latin1]{inputenc}
+%%\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+\usepackage{float} %Evitar problemas con la tabla
+\usepackage[top=3cm,bottom=3cm,left=3.5cm,right=3.5cm,footskip=1.5cm,headheight=1.5cm,headsep=.5cm,textheight=3cm]{geometry}
+
+\begin{document}
+\title{Inteligencia Artificial \\ \begin{Large}Estado del Arte: Problema OSAP\end{Large}}
+\author{Diego Esteban Rosales Le\'on}
+\date{\today}
+\maketitle
+
+
+%--------------------No borrar esta secci\'on--------------------------------%
+\section*{Evaluaci\'on}
+
+\begin{tabular}{ll}
+Resumen (5\%): & \underline{\hspace{2cm}} \\
+Introducci\'on (5\%):  & \underline{\hspace{2cm}} \\
+Definici\'on del Problema (10\%):  & \underline{\hspace{2cm}} \\
+Estado del Arte (35\%):  & \underline{\hspace{2cm}} \\
+Modelo Matem\'atico (20\%): &  \underline{\hspace{2cm}}\\
+Conclusiones (20\%): &  \underline{\hspace{2cm}}\\
+Bibliograf\'ia (5\%): & \underline{\hspace{2cm}}\\
+ &  \\
+\textbf{Nota Final (100\%)}:   & \underline{\hspace{2cm}}
+\end{tabular}
+%---------------------------------------------------------------------------%
+\vspace{2cm}
+
+\begin{abstract}
+En las grandes organizaciones existe el desaf\'io respecto a la distribuci\'on del espacio f\'isico de las oficinas, cub\'iculos, salas, entre otros, de la manera m\'as eficiente posible. Este reto es llamado \textit{Office Space Allocation Problem} (con sus siglas, OSAP), que consiste en asignar entidades (m\'aquinas, personas, roles, etc.) a un grupo de habitaciones disponibles, rigiend\'ose por diferentes tipos de restricciones para as\'i optimizar el uso del espacio. Este paper definir\'a el problema, a trav\'es de la revisi\'on de diferentes modelos existentes que se usan para resolver este tipo de obst\'aculos, para finalmente formular un modelo matem\'atico que permita analizar c\'omo se desenvuelven las variables del sistema, con el objetivo de minimizar todo espacio que est\'e mal distribuido, es decir, el espacio que no se est\'e ocupando y el que se est\'e sobre utilizando.
+
+%Resumen del informe en no m\'as de 10 l\'ineas, donde se sintetice el problema que se trata y sirva para que un lector no involucrado comprenda el objetivo del documento.%
+\end{abstract}
+\section{Introducci\'on}
+
+En este paper se abordar\'a un problema com\'un y corriente en cualquier tipo de organizaci\'on o empresa, relacionado a la distribuci\'on eficiente del espacio f\'isico de todas sus instalaciones, conocido como OSAP. Su importancia radica en que la optimizaci\'on del espacio impacta directamente en la productividad. El objetivo versa sobre entender detalladamente este problema en todas sus aristas, para buscar diferentes v\'ias que puedan solucionarlo. Para lo anterior, se definir\'a este problema en espec\'ifico, se har\'a una revisi\'on exhaustiva del estado del arte hasta la fecha, se implementar\'a un modelo matem\'atico basal que guiar\'a al hallazgo de la soluci\'on definitiva, para luego dar paso a las conclusiones obtenidas de este an\'alisis.
+
+%Una explicaci\'on breve del contenido del informe, es decir, detalla: Prop\'osito, Estructura del Documento, Descripci\'on (muy breve) del Problema y Motivaci\'on.%
+
+\section{Definici\'on del Problema}
+
+OSAP se define como un problema de distribuci\'on para ciertos espacios finitos en base a diferentes tipos de par\'ametros (recursos) \cite{awadallah2012office}, con el objetivo principal de minimizar el espacio mal utilizado (no utilizado y sobre utilizado) y, a su vez cumplir con restricciones o l\'imites designados. A saber, existen dos tipos de restricciones a considerar: duras o fuertes, que son limitantes que siempre se deben satisfacer y, las blandas, que son condiciones que pueden llegar a ser un \'obstaculo inamovible si no se evaden, debido a que est\'an directamente relacionadas con la calidad del problema, es decir, entre m\'as soluciones blandas sean infringidas, peor ser\'a la soluci\'on encontrada. La soluci\'on m\'as factible y \'optima ser\'a la que cumpla con todas las restricciones duras y eluda cabalmente las restricciones blandas.
+Para lograr lo anterior, se utilizar\'an diferentes variables, tales como (1) total de entidades (personas, m\'aquinas, etc.), (2) cantidad de pisos y habitaciones y (3) las restricciones anteriormente mencionadas. Adem\'as, es posible observar diferentes dificultades, como la obligaci\'on de que toda entidad sea ubicada en una habitaci\'on, hayan distancias espec\'ificas entre cada una o que se tengan que agrupar bajo ciertos criterios, entre otras.
+Un modelo cl\'asico para resolver el OSAP, est\'a relacionado al m\'etodo de la b\'usqueda local \cite{lopes2010office}, al que en versiones posteriores se le fueron introduciendo otras variables para mejorar o modificar su eficacia, como la mezcla de diferentes algoritmos o el uso Tabu Search \cite{USM}). Por otro lado, es necesario mencionar que surgieron opciones menos convencionales como la utilizaci\'on de herramientas harm\'onicas para la b\'usqueda de soluciones \cite{awadallah2012office} o adaptaciones del met\'odo Hill Climbing (ejemplo: Late Acceptance Hill Climbing) \cite{bolaji2019adaptation}.
+
+% Explicaci\'on del problema que se va a estudiar, en qu\'e consiste, cu\'ales son sus variables , restricciones y objetivo(s) de manera general (en palabras, no una formulaci\'on matem\'atica). Debe entenderse claramente el problema y qu\'e busca resolver
+% Explicar si existen problemas relacionados.
+%Destacar, si existen, las variantes m\'as conocidas.\\
+%Redactar en tercera persona, sin faltas de ortograf\'ia y referenciar correctamente sus fuentes mediante el comando  \verb+\cite{ }+. Por ejemplo, para hacer referencia al art\'iculo de algoritmos h\'ibridos para problemas de satisfacci\'on de restricciones~\cite{Prosser93Hybrid}.
+
+\section{Estado del Arte}
+
+La b\'usqueda de la distribuci\'on eficaz del espacio y los objetos en un lugar determinado, no tiene fecha de origen exacta, 
+pero es posible observarla de manera global cuando las personas compran muebles, adornan su casa, designan habitaciones a diferentes integrantes de la familia, etc., puesto que cada cent\'imetro disponible llega a ser decisivo. Esto se puede extrapolar a las empresas, organizaciones e instituciones existentes, por lo que surge de manera natural la necesidad de una herramienta tecnol\'ogica que resuelva este tema. Y por ende, se denomin\'o este problema como OSAP en pos de aunar los esfuerzos acad\'emicos contra un enemigo com\'un. \\
+De lo anterior surgen diferentes m\'etodos de b\'usqueda que analizan algoritmos y metodolog\'ias para buscar una soluci\'on, tales como:
+
+\begin{enumerate}
+    \item \textbf{Late Acceptance Hill Climbing (LAHC):} Tiene un enfoque similar a Hill Climbing (HC) o a Simulated Annealing (SA). El primero obtiene una soluci\'on y la compara con otras alternativas hasta encontrar la m\'as adecuada; el segundo utiliza el mismo proceso pero evita quedarse est\'atico en un m\'inimo local. Ahora bien, LAHC se basa en lo anterior pero agrega m\'as criterios de aceptaci\'on para la resoluci\'on del problema, lo que lo hace m\'as completo. Sin embargo, se debe considerar que a mayor cantidad de criterios, mayor tiempo de b\'usqueda y comparaci\'on entre los mismos \cite{bolaji2019adaptation}.
+    \item \textbf{Tabu Search:} Esta opci\'on se enfoca en guardar los movimientos de b\'usqueda que ya fueron realizados, debido a que cualquier movimiento nuevo debe ignorar lo previamente calculado, es decir, se buscar\'an nuevas soluciones sin visitar las ya existentes. Si bien suena ventajoso, su mayor dificultad consiste en el ahorro de tiempo, debido a que puede lograr tener una cantidad de iteraciones.
+    \item \textbf{Hybrid Meta Heuristics (HMH):} Si bien la metaheur\'istica es un m\'etodo heur\'istico para resolver un problema, la HMH le suma la optimizaci\'on del tiempo, permitiendo mejoras generales a gran escala. Su mayor \'obstaculo se relaciona con lo dificultoso que es integrar ambas metodolog\'ias de manera \'optima \cite{blum2008hybrid}.
+    \item \textbf{Harmonic Search (HS):} Es una metaheur\'istica de optimizaci\'on que fue creada para observar el nivel de improvisaci\'on que tienen los m\'usicos. Consiste en que hay una memoria harm\'onica y que guarda la soluci\'on creada, la misma esta basada en la consideraci\'on de la memoria, la improvisacion sobre los instrumentos y el tono producido \cite{Gao2015}. Seg\'un Awadallah, Tajud\'in y Azmi \cite{awadallah2012office}, el uso de HS en OSAP, puede ser el equivalente a considerar los espacios f\'isicos como una memoria, elegir al azar las habitaciones como improvisaci\'on y seleccionar la habitaci\'on con menos penalizaci\'on de las restricciones como el tono. Si bien es una soluci\'on innovadora, su dificultad radica en la incertidumbre de su realizaci\'on. 
+\end{enumerate}
+Por otro lado, dentro del estado del arte, existe un estudio, de Lopes y Girimonte \cite{lopes2010office}, que hace una comparaci\'on entre estos cuatro tipos de metaheur\'isticas ya mencionadas: Hill Climbing (HC), Simulated Annealing (SA), Tabu Search (TS), Hybrid Meta heuristic (HMH), con el objetivo de resolver un OSAP basado en "Investigaci\'on Espacial Europea" (Europe Space Agency), donde evaluaron cada algoritmo obteniendo la siguiente tabla comparativa:
+
+\begin{table}[H]
+    \begin{center}
+    %Tabla 1
+    \begin{tabular}{|c|cccc|}
+    \hline
+    Largo                        & \multicolumn{4}{c|}{10000 iteraciones}                                                                    \\ \hline
+    Algoritmo                    & \multicolumn{1}{c|}{HC}     & \multicolumn{1}{c|}{SA}     & \multicolumn{1}{c|}{TS}     & HMH             \\ \hline
+    Espacio mal usado ($f_1$)     & \multicolumn{1}{c|}{449.37} & \multicolumn{1}{c|}{440.26} & \multicolumn{1}{c|}{430.08} & 416.81          \\ \hline
+    Restricciones blandas ($f_2$) & \multicolumn{1}{c|}{203.57} & \multicolumn{1}{c|}{201.87} & \multicolumn{1}{c|}{206.22} & 209.52          \\ \hline
+    Total ($f$)                    & \multicolumn{1}{c|}{652.93} & \multicolumn{1}{c|}{642.13} & \multicolumn{1}{c|}{636.30} & \textbf{626.33} \\ \hline
+    \end{tabular}
+    %Tabla 2
+    \begin{tabular}{|c|cccc|}
+    \hline
+    Largo                        & \multicolumn{4}{c|}{5000 iteraciones}                                                                    \\ \hline
+    Algoritmo                    & \multicolumn{1}{c|}{HC}     & \multicolumn{1}{c|}{SA}     & \multicolumn{1}{c|}{TS}     & HMH             \\ \hline
+    Espacio mal usado ($f_1$)     & \multicolumn{1}{c|}{436.08} & \multicolumn{1}{c|}{440.11} & \multicolumn{1}{c|}{450.11} & 424.42          \\ \hline
+    Restricciones blandas ($f_2$) & \multicolumn{1}{c|}{209.42} & \multicolumn{1}{c|}{213.17} & \multicolumn{1}{c|}{209.82} & 207.88          \\ \hline
+    Total ($f$)                    & \multicolumn{1}{c|}{645.50} & \multicolumn{1}{c|}{653.28} & \multicolumn{1}{c|}{659.93} & \textbf{632.30} \\ \hline
+    \end{tabular}
+    %Tabla 3
+    \begin{tabular}{|c|cccc|}
+    \hline
+    Largo                        & \multicolumn{4}{c|}{1050 iteraciones (10*n)}                                                                    \\ \hline
+    Algoritmo                    & \multicolumn{1}{c|}{HC}     & \multicolumn{1}{c|}{SA}     & \multicolumn{1}{c|}{TS}     & HMH             \\ \hline
+    Espacio mal usado ($f_1$)     & \multicolumn{1}{c|}{442.36} & \multicolumn{1}{c|}{451.93} & \multicolumn{1}{c|}{438.87} & 432.68          \\ \hline
+    Restricciones blandas ($f_2$) & \multicolumn{1}{c|}{242.51} & \multicolumn{1}{c|}{231.40} & \multicolumn{1}{c|}{219.54} & 244.19          \\ \hline
+    Total ($f$)                    & \multicolumn{1}{c|}{684.87} & \multicolumn{1}{c|}{682.32} & \multicolumn{1}{c|}{\textbf{658.40}} & 676.87 \\ \hline
+    \end{tabular}
+    \caption{Resultados obtenidos de los cuatro m\'etodos mencionados anteriormente para \cite{lopes2010office}}
+    \end{center}
+    \label{tabla1}
+\end{table}
+\noindent
+En los dos primeros casos de la tabla anterior (5000 y 10000 iteraciones) se puede apreciar que HMH tiene un rendimiento superior al resto de las metaheur\'isticas, debido al tama\~no de las iteraciones (entre m\'as iteraciones mejor), pero, cuando se tiene una menor cantidad de iteraciones, como en el tercer caso (1050 iteraciones), HMH tiene un menor rendimiento que TS, debido a que este \'ultimo converge a una mayor rapidez por sobre cualquier otro m\'etodo. Mientras que HC y SA, en cualquiera de los tres casos, siempre tienen valores similares. Sin embargo, es necesario mencionar que las diferencias de desempe\~no no son abruptamente lejanas, por lo que para grandes escenarios HMH sobresale como mejor opci\'on y para peque\~nos escenarios predomina TS. \\
+\noindent
+\\
+Finalmente, en el estado del arte no queda claro el futuro de los estudios e investigaciones respecto a una metodolog\'ia de b\'usqueda que resuelva el OSAP, debido a la variedad de opciones y la cantidad de restricciones y factores a contemplar, por lo que sigue en vigencia el desarrollo de una herramienta de soluci\'on \'unica.
+
+%La informaci\'on que describen en este punto se basa en los estudios realizados con %antelaci\'on respecto al tema.
+%Lo m\'as importante que se ha hecho hasta ahora con relaci\'on al problema. %Deber\'ia responder preguntas como las siguientes:
+%?`cu\'ando surge?, ?`qu\'e m\'etodos se han usado para resolverlo?, ?`cu\'ales son %los mejores algoritmos que se han creado hasta
+%la fecha?, ?`qu\'e representaciones han tenido los mejores resultados?, ?`cu\'al es %la tendencia actual para resolver el problema?, tipos de movimientos, heur\'isticas, %m\'etodos completos, tendencias, etc... Puede incluir gr\'aficos comparativos o %explicativos.\\
+
+\section{Modelo Matem\'atico}
+
+A continuaci\'on, se presentar\'a un modelo matem\'atico basado en la explicaci\'on de Francisco Castillo, Mar\'ia Cristina Riff y Elizabeth Montero \cite{USM}, siendo necesario considerar que tiene un enfoque similar al de \"Ulker y Landa Silva \cite{ulker20100}. Adem\'as existen alternativas de soluci\'on con m\'etodos diferentes \cite{awadallah2012office}, \cite{bolaji2019adaptation} y \cite{lopes2010office} que no ser\'an considerados por su falta de atingencia a las etapas posteriores de este paper.
+
+\subsection{Par\'ametros}
+
+Primero, se definen todas las variables respectivas a utilizar: \\
+
+\noindent
+$R \rightarrow $ Conjunto de Habitaciones del edificio. \\
+$E \rightarrow $ Conjunto de Entidades. \\
+$J \rightarrow $ Conjunto de todas las restricciones, $J =$ \{\textit{as,asp,mh,dh,hnc,ady,crc,ljn,cap}\}. \\ 
+$S_{e} \rightarrow $ Capacidad requerida de la entidad $e, \forall e \in E$. \\
+$S_{r} \rightarrow $ Capacidad de la habitaci\'on $r, \forall r \in R$. \\
+$A_{dr} \rightarrow $ Lista de las habitaciones adyacentes a $r, \forall r \in R$. \\
+$C_{cr} \rightarrow $ Lista de las habitaciones cercanas a $r, \forall r \in R$. \\
+\noindent \\
+Luego, se definen los par\'ametros para las restricciones duras y blandas: \\
+
+\noindent
+$HC^j \rightarrow $ Conjunto de las restricciones duras $j, \forall j \in J$. \\
+$SC^j \rightarrow $ Conjunto de las restricciones blandas $j, \forall j \in J$. 
+
+\subsection{Variables}
+
+Las variables a utilizar son de dos tipos: una para la asignaci\'on de variables y la otra para medir si las restricciones blandas fueron infringidas o no.
+
+$$
+x_{er} = \left\{
+\begin{array}{cl}
+1 & \mbox{si la entidad } e \mbox{ es asignada a la habitaci\'on } r, \ \forall e \in E, r \in R\\
+0&\mbox{caso contrario}.
+\end{array}\right.
+$$
+
+$$
+y_{i}^j = \left\{
+\begin{array}{cl}
+1 & \mbox{si la restricci\'on } i \mbox{ del tipo } j \mbox{ fue infringida}, \ \forall i \in |SC^j|, j \in J\\
+0&\mbox{caso contrario}.
+\end{array}\right.
+$$
+
+\subsection{Restricciones}
+En \cite{USM} se realizaron generalizaciones para nueve tipos de restricciones, las que pueden ser consideradas duras o blandas, (deben ser satisfechas y es deseable que sean satisfechas, respectivamente), siendo importante minimizar esta \'ultima que es un objetivo del problema, debido a que mejorar\'a la soluci\'on a encontrar.
+\subsubsection{Restricciones Duras}
+
+\begin{enumerate}
+    \item Esta restricci\'on se tiene que cumplir y no puede ser considerada como una restricci\'on blanda.
+    Toda entidad $e$ tiene que tener asignada una habitacion $r$:
+    \begin{equation}
+    \sum_{r \in R} x_{er}= 1, \forall e \in E 
+    \end{equation}
+    \item Asignaci\'on: La entidad $e$ tiene que estar asignada a una habitaci\'on $r$
+    \begin{equation}
+        x_{er} = 1
+    \end{equation}
+    \item Asignaci\'on Prohibida: La entidad $e$ no tiene que ser asignada a una habitaci\'on $r$.
+    \begin{equation}
+        x_{er} = 0
+    \end{equation}
+    \item Misma Habitaci\'on: Dos entidades $e_1$ y $e_2$ tienen que estar en la misma habitaci\'on.
+    \begin{equation}
+        x_{e_1r} = 1, x_{e_2r} = 1, \ \forall r \in R 
+        \notag
+    \end{equation}
+    \begin{equation}
+        x_{e_1r} - x_{e_2r} = 0, \ \forall r \in R 
+    \end{equation}
+    \item Distinta Habitaci\'on: Dos entidades $e_1$ y $e_2$ no tienen que estar en la misma habitaci\'on.
+    \begin{equation}
+        x_{e_1r} = 1 \leftarrow x_{e_2r} = 0, \ \forall r \in R 
+        \notag
+    \end{equation}
+    \begin{equation}
+        x_{e_1r} + x_{e_2r} \leq 1, \ \forall r \in R 
+    \end{equation}
+    \item Habitaci\'on no compartida: La entidad $e$ no puede compartir habitaci\'on con ninguna otra entidad
+    \begin{equation}
+    \sum_{f \in \ E-e} x_{fr} \leq (|E|-1) - (|E|-1)x_{er}, \ \forall r \in R 
+    \end{equation}
+    \item Adyacencia: Las entidades $e_1$ y $e_2$ deben asignarse en habitaciones adyacentes.
+    \begin{equation}
+        x_{e_1r} \leq \sum_{s \in A_{dr} } x_{e_2s} \leq 1, \ \forall r \in R 
+    \end{equation}
+    \item Cercan\'ia: Las entidades $e_1$ y $e_2$ deben asignarse en habitaciones cercanas.
+    \begin{equation}
+        x_{er} \leq \sum_{s \in C_{cr} } x_{fs} \leq 1, \ \forall r \in R 
+    \end{equation}
+    \item Lejan\'ia: Las entidades $e_1$ y $e_2$ deben asignarse lejos la una de la otra.
+    \begin{equation}
+        0 \leq \sum_{s \in C_{cr} } x_{e_2s} \leq 1 - x_{e_1r}, \ \forall r \in R 
+    \end{equation}
+    \item Capacidad: La habitaci\'on r no debe superar cierta capacidad respecto a las entidades asignadas en ella. (Sobre uso)
+    \begin{equation}
+        \sum_{e \in E } S_{e}x_{er} \leq S_{r}
+    \end{equation}
+\end{enumerate}
+
+\subsubsection{Restricciones Blandas}
+
+\begin{enumerate}
+    \item Asignaci\'on:
+    \begin{equation}
+        y_{i}^{as} = 1 - x_{er}
+    \end{equation}
+    \item Asignaci\'on Prohibida: 
+    \begin{equation}
+        y_{i}^{asp} = x_{er}
+    \end{equation}
+    \item Misma Habitaci\'on: 
+    \begin{equation}
+        y_{ir}^{mh} - 1 \leq x_{e_1r} - x_{e_2r} \leq 1 - \epsilon + \epsilon y_{ir}^{mh}, \ \forall r \in R. 
+    \end{equation}
+    \begin{equation}
+        y_{i}^{mh} = \sum_{r \in R} y_{ir}^{mh}
+    \end{equation}
+    \item Distinta Habitaci\'on: 
+    \begin{equation}
+        (1 + \epsilon) - (1 + \epsilon)y_{ir}^{dh} \leq x_{e_1r} - x_{e_2r} \leq 2 - y_{ir}^{dh}, \ \forall r \in R 
+    \end{equation}
+    \begin{equation}
+        y_{i}^{dh} = \sum_{r \in R} (1 - y_{ir}^{dh}) 
+    \end{equation}
+    \item Habitaci\'on no compartida: 
+    \begin{equation}
+        (|E| - 1)(2 - x_{er} - y_{ir}^{hnc}) \geq \sum_{f \in \ E-e} x_{fr}, \ \forall r \in R 
+    \end{equation}
+    \begin{equation}
+        \sum_{f \in \ E-e} x_{fr} \geq (|E| - 1)(1 - x_{er})+ \epsilon - (|E| - 1 + \epsilon)y_{ir}^{hnc}, \ \forall r \in R
+    \end{equation}
+    \begin{equation}
+        y_{i}^{hnc} = \sum_{r \in R} (1-y_{ir}^{hnc})
+    \end{equation}
+    \item Adyacencia: 
+    \begin{equation}
+        y_{ir}^{ady} + x_{e_1r} - 1 \leq \sum_{s \in A_{dr}} x_{e_2s} \leq x_{e_1r} - \epsilon + (1 + \epsilon) y_{ir}^{ady}, \ \forall r \in R 
+    \end{equation}
+    \begin{equation}
+        y_{i}^{ady} = \sum_{r \in R} (1-y_{ir}^{ady})
+    \end{equation}
+    \item Cercan\'ia:
+    \begin{equation}
+        y_{ir}^{crc} + x_{er} - 1 \leq \sum_{s \in C_{cr}} x_{fs} \leq x_{er} - \epsilon + (1 + \epsilon) y_{ir}^{crc}, \ \forall r \in R 
+    \end{equation}
+    \begin{equation}
+        y_{i}^{ljn} = \sum_{r \in R} (1-y_{ir}^{ljn})
+    \end{equation}
+    \item Lejan\'ia:
+    \begin{equation}
+        1 - x_{e_1r} + \epsilon - (1 + \epsilon) y_{ir}^{ljn} \leq \sum_{s \in C_{cr}} x_{e_2s} \leq 2 - x_{e_1r} - y_{ir}^{ljn}, \ \forall r \in R 
+    \end{equation}
+    \begin{equation}
+        y_{i}^{ljn} = \sum_{r \in R} (1-y_{ir}^{ljnx|})
+    \end{equation}
+    \item Capacidad: 
+    \begin{equation}
+        \sum_{e \in E } S_{e}x_{er} + (S_r + \epsilon) (1 - y_{i}^{cap}) \geq S_r + \epsilon 
+    \end{equation}
+    \begin{equation}
+        \sum_{e \in E } S_{e}x_{er} + \sum_{e \in E}(S_e - S_r) (1 - y_{i}^{cap}) \leq \sum_{e \in E} S_e
+        \end{equation}
+\end{enumerate}
+\subsection{Funci\'on Objetivo}
+
+La funci\'on objetivo tiene por finalidad minimizar el mal uso del espacio (desuso y sobre uso) y la cantidad de veces que se infringen las restricciones blandas. Se debe notar que el sobre uso del espacio f\'isico se penaliza como el doble del espacio en desuso. Para simplificar visualmente la funci\'on objetivo \cite{USM}, se considerar\'a $w^j$ como la penalizaci\'on de cada restricci\'on blanda $j$, con $j \in J$.
+Finalmente queda:
+
+\begin{equation}
+    Min \ z = \sum_{r \in R} max(S_r - \sum_{e \in E} x_{er}S_e, \ 2 \sum_{e \in E}x_{er}S_e - S_r) + \sum_{j \in J}w^j \sum_{i=1}^{|SC^j|}y_{i}^j 
+\end{equation}
+
+%Uno o m\'as modelos matem\'aticos para el problema, idealmente indicando el espacio de b\'usqueda para cada uno. Cada modelo debe estar correctamente referenciado, adem\'as no debe ser una imagen extraida. Tambi\'en deben explicarse en detalle cada una de las partes, mostrando claramente la funci\'on a maximizar/minimizar, variables y restricciones. Tanto las f\'ormulas como las explicaciones deben ser consistentes.
+
+\section{Conclusiones}
+A modo de cierre, se concluye que el OSAP es un problema que surge desde la necesidad humana de sacar el m\'aximo provecho al espacio f\'isico que habita, tomando en cuenta diferentes factores. En este sentido, la existencia del OSAP llev\'o a la creaci\'on y construcci\'on de diferentes tipos de m\'etodos para encontrar una soluci\'on a este problema, coincidiendo primordialmente en su objetivo de utilizar eficientemente los espacios (disminuyendo su mal uso), tomando en cuenta restricciones basales (duras y blandas) y utilizando los m\'etodos de b\'usqueda como principal herramienta. A su vez, sus diferencias radican en la forma y el enfoque que utilizan para resolver el problema, por lo que, si bien resuelven diferentes aristas del mismo, a\'un no logran que sea a nivel \'unico y global. \\
+A la luz de lo anterior, se vuelve importante destacar tanto los m\'etodos de Tabu Search como los de Meta heur\'istica h\'ibrida, ya que ambos se acercan a una adecuada soluci\'on dependiendo de si se trata de un bajo nivel o un alto nivel de iteraciones, respectivamente. Por lo que, gracias a sus resultados positivos, es esencial poder considerarlos como base para futuros procedimientos e investigaciones.\\
+Por otro lado, es importante tener en cuenta que en la mayor\'ia de los estudios revisados, se utilizaron computadores con 4 GB de RAM o con procesadores que no pertenecen a la \'ultima generaci\'on, lo que puede significar una clara limitante para cada m\'etodo desarrollado, considerando c\'omo afecta la velocidad y eficiencia del hardware en los mismos. \\
+Es innegable que el OSAP es un problema interesante de resolver por el gran impacto que su resoluci\'on tendr\'ia tanto a nivel mundial (industrias y negocios) como a nivel individual (en la vida de las personas). Y aqu\'i es relevante considerar algoritmos no revisados, aplicaciones computacionales a la vanguardia, equipos f\'isicos con mayor capacidad o una mezcla de metodolog\'ias diferentes, que abran puertas y posibilidades a obtener una respuesta definitiva para el OSAP o que sienten bases y orientaciones diferentes para futuros investigadores. 
+%Conclusiones RELEVANTES del estudio realizado. Deber\'ia responder a las preguntas: ?`todas las t\'ecnicas resuelven el mismo problema o hay algunas diferencias?, ?`En qu\'e se parecen o difieren las t\'ecnicas en el contexto del problema?, ?`qu\'e limitaciones tienen?, ?`qu\'e t\'ecnicas o estrategias son las m\'as prometedoras?, ?`existe trabajo futuro por realizar?, ?`qu\'e ideas usted propone como lineamientos para continuar con investigaciones futuras?
+\section{Bibliograf\'ia}
+\bibliographystyle{plain}
+\bibliography{Referencias}
+
+\end{document} 
